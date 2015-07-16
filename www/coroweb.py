@@ -55,7 +55,7 @@ def get_named_kw_args(fn):
 def has_named_kw_args(fn):
 	params = inspect.signature(fn).parameters
 	for name, param in params.items():
-		if param.kind == inspect.Parameter.VAR_KEYWORD:
+		if param.kind == inspect.Parameter.KEYWORD_ONLY:
 			return True	
 
 def has_var_kw_arg(fn):
@@ -112,7 +112,7 @@ class RequestHandler(object):
 					for k, v in parse.parse_qs(qs, True).items():
 						kw[k] = v[0]
 		if kw is None:
-			kw = dict(**request.match_info)
+			kw = dict(**request.match_info) #match {name}
 		else:
 			if not self._has_var_kw_arg and self._named_kw_args:
 				#remove all unamed kw:
