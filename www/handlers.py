@@ -124,6 +124,7 @@ def authenticate(*, email, passwd):
         raise APIValueError('email', 'Email not exist.')
     user = users[0]
     # check passwd:
+    logging.info(user.passwd+'------------------------->'+passwd)
     sha1 = hashlib.sha1()
     sha1.update(user.id.encode('utf-8'))
     sha1.update(b':')
